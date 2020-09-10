@@ -1,0 +1,130 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class MulMatrix {
+  
+public static void main(String[] args)
+{
+Scanner input = new Scanner(System.in);
+Scanner fileReader;
+int row1 = 0;
+int row2 = 0; 
+int column1 = 0; 
+int column2 = 0;
+System.out.print("Enter First File: ");
+String fileNameFirst = input.nextLine().trim();
+try
+{
+fileReader = new Scanner(new File(fileNameFirst));
+while(fileReader.hasNextLine())
+{
+String filename = fileReader.nextLine();
+column1 = filename.split(" ").length;
+row1++;
+}
+if(row1 < 2)
+{
+System.out.println(fileNameFirst + " No Two Line Found!");
+System.exit(0);
+}
+}catch(FileNotFoundException e){
+System.out.println(fileNameFirst + " File Not Found!");
+System.exit(0);
+}
+  
+System.out.print("Enter Second File: ");
+String fileNamesecond = input.nextLine().trim();
+try
+{
+fileReader = new Scanner(new File(fileNamesecond));
+while(fileReader.hasNextLine())
+{
+String filename = fileReader.nextLine();
+column2 = filename.split(" ").length;
+row2++;
+}
+if(row2 < 2)
+{
+System.out.println(fileNamesecond + " No Two Line Found!");
+System.exit(0);
+}
+}catch(FileNotFoundException e){
+System.out.println(fileNamesecond + " File Not Found!");
+System.exit(0);
+}
+  
+int[][] arrayone = new int[row1][column1];
+int[][] arraytwo = new int[row2][column2];
+  
+try
+{
+fileReader = new Scanner(new File(fileNameFirst));
+while(fileReader.hasNextLine())
+{
+for(int index = 0; index < arrayone.length; index++)
+{
+String filename[] = fileReader.nextLine().split(" ");
+for(int i = 0; i < filename.length; i++)
+{
+arrayone[index][i] = Integer.parseInt(filename[i]);
+}
+}
+}
+}catch(FileNotFoundException e){
+System.out.println(fileNameFirst + " File Not Found!");
+System.exit(0);
+}
+  
+try
+{
+fileReader = new Scanner(new File(fileNamesecond));
+while(fileReader.hasNextLine())
+{
+for(int index = 0; index < arraytwo.length; index++)
+{
+String filename[] = fileReader.nextLine().split(" ");
+for(int i = 0; i < filename.length; i++)
+{
+arraytwo[index][i] = Integer.parseInt(filename[i]);
+}
+}
+}
+}catch(FileNotFoundException fnfe){
+System.out.println(fileNameFirst + " File Not Found!");
+System.exit(0);
+}
+  
+int[][] multiplication = matrixProduct(arrayone, arraytwo, row1, column1, column2);
+System.out.println("Matrix Multiplication is: ");
+printMatrix(multiplication);
+}
+  
+private static int[][] matrixProduct(int[][] arrayone, int[][] arraytwo, int row1, int column1, int column2)
+{
+int[][] multiplication = new int[row1][column2];
+for(int index = 0; index < row1; index++)
+{
+for(int i = 0; i < column2; i++)
+{
+for(int j = 0; j < column1; j++)
+{
+multiplication[index][i] = arrayone[index][j] * arraytwo[j][i];
+}
+}
+}
+return multiplication;
+}
+  
+private static void printMatrix(int[][] array)
+{
+for(int index = 0; index < array.length; index++)
+{
+for(int i = 0; i < array[0].length; i++)
+{
+System.out.print(array[index][i] );
+}
+System.out.println();
+}
+}
+}
